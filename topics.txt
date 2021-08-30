@@ -1,0 +1,205 @@
+Use className instead of class and htmlFor instead for attribute.
+components return only 1 main div.
+
+If dont want root div in app.js. Replace div#root to React.Fragment tag or import Fragment and use only Fragment tag (<Fragment></Fragment>). (or can be empty tag.)
+
+//class components
+
+To use class components with method (function in class) render() {}. render() is lifecycle method. There are other lifecycle methods too.
+Then extend React.Component in class. (import Component and extend as Component)
+
+import React, { Component } from 'react';
+
+class App extends Component {
+  render() {
+    const name = 'Abhishek';
+    const loading = false;
+    return (
+      <div className='App'>
+        <h1>Hello {!loading && name}</h1>
+      </div>
+    );
+  }
+}
+
+<h1>Hello {!loading ? name : null}</h1> = <h1>Hello {!loading && name}</h1>
+if statements can be written in &&.
+if && then if first condition true and second true then shows second or second id false then shows nothing.
+
+if define above render() then it is method, then should use as this.variable. (for class components)
+
+custom components should be in components folder.
+custom components name should begin with uppercase letter.
+
+//props
+to access props in class components use this.props.name of prop
+
+props are properties that are pass to components from outside.
+
+//default props if props are not pass in
+static defaultProps = {
+    prop name: ...,
+    prop name: ...
+}
+
+default props are override by passin props
+
+//prop type check
+It is type checking like it tells that prop should be number, string, array or object etc.
+To uise proptype import PropTypes from "prop-types"
+
+use as
+static propTypes = {
+    prop name: PropTypes.string.isRequired,
+    prop name: PropTypes.number.isRequired
+}
+
+(it will show the warning in console if wrong type is pass in)
+
+//state
+state can be added using constuctor function 
+constuctor function runs when Component runs
+constuctor() {
+    super()
+    console.log('Hello')
+}
+
+Then define state as this.state in constuctor. (also other way we dont need to use that in constuctor you can directly define state = {})
+state is an object.
+
+this.state = {
+    property: property value
+}
+
+to grab something from state in a class component this.state.property
+
+to change state in class based component
+this.setState({property: value})
+
+//inline style in react pass in by attribute (use camel case property name and string as property value)
+style = {{ backgroundColor : 'red' }}
+or style = {style}
+const style = {
+    property: ...,
+    property: ...
+}
+
+(to avoid using this.state in everytime JSX we can use destructuring to get values we need from state)
+
+const { property, property } = this.state
+
+can use property instead of this.state.property
+
+//list and passing state with props
+
+each item in the list should have unique key attribute.
+
+//fuctional components are used for stateless components
+fuctional components doesn't need extends, render, this keyword for accessing props.
+props are access via function arguments.
+if there is no javascript above return then no curly brackets and return word with () required.
+default props and propTypes are put in below function. (use componentName. instead of static)
+can also use destructuring in prop arguments
+({user: {property, property}})
+({property, property})
+
+//updating states.
+//lifecycle method
+render()
+componentDidMount() (it runs when component mounts)
+
+//Environment variables (store global variables)
+create file in root folder .env.local (dont put this file in public repositary)
+create variable starts with REACT_APP_NAME
+after creating Environment variable we need to restart the server
+
+we can call that variable by process.env.REACT_APP_NAME
+
+//events and search
+in react when we have a form we can attach state to input by setting input value = {this.state.propertyName}
+onChange event should be put on input with method that changes state property value to input value
+(input value to this.state.propertyName)
+
+onSubmit event on form with method
+(use arrow functions)
+in normal function this keyword you need to bind ( .bind(this) ) to the function (method)
+generally use arrow function. Because in arrow function this keyword works differently.
+
+//React router
+npm i react-router-dom (install)
+
+import BrowserRouter, Switch, Route from react-router-dom
+(default import doesn't require curly braces on import. React router export lot of thigs that are not default so put imports in curly braces)
+
+in main app wrap everything from return statement in BrowserRouter tag.
+wrap all routes in a Switch tag and put Routes in there.
+(path '/' for home page. Create different paths for different pages. '/:id' where id is dynamic)
+(render={(props) => ()} for multiple component or passing props, states [when we need to pass states and props] || and component={component} for single component that doesn't require props or state [when we don't need to pass anything])
+Route exact path='/' render={props => (
+  <Fragment>
+  put here the components
+  </Fragment>
+)}
+
+(pass extra props in component by {...props} || and get [match] in component by this.props.match)
+/////(this.props.match.params)
+
+for pages create pages folder in component and put different page components there.
+for every component create new route
+<Route exact path='/componentName' component={component}
+
+//Links in router
+we don't use [a] tags for links because this is client side routing. means it doesn't send new request for new page.
+
+[a] tag changes state and Link tag doesn't.
+
+import Link from react-router-dom
+use Link tag instead of [a] tag and href is gonna get change to [to] attribute.
+[to] attribute will be path given to component in route.
+
+//Hooks and context
+context is used for state management.
+Hooks allow us to use functional components instead of class components. hooks are function that let us hook into react state and lifecycle methods from functional component.
+import { useState, useEffect } from 'react'
+
+useState let us use state
+useEffect memic lifecycle methods
+
+useContext and useReducer are used with context Api.
+useReducer dispatch actions to manipulate app level state and sends that states to component.
+
+useRef for form submission.
+
+//Hooks
+turn all class components to functional components.
+turn all methods in class to functions (const)
+
+use state in functional component
+
+import {useState} //(hook)
+define state
+const [stateName, setStateName] = useState('default value')
+
+to set state dont call this.setState()
+
+call
+setStateName(value we want to set)
+
+and dont write {this.state.name}
+just call {name}
+
+use lifecycle in functional component
+import {useEffect}
+useEffect(callback, [dependency])
+(dependency means condition (if something changes) when we want this to run)
+ (dont return directly without {})
+//useEffect(() => {
+  method1
+  method2
+  continue
+}, [])
+
+if without dependency then put [] and put comment under method
+// eslint-disable-next-line
+
+([] means when component mounts)
